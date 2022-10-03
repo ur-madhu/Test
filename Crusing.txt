@@ -1,0 +1,94 @@
+Question 3A:
+package org.madhu;
+import java.util.*;
+
+public class Members {
+	int idno, age, membership;
+	String name, tripname, membershiptypes;
+	int fee, ticketno;
+	static int countcrew, countadult, countchild, countticket;
+	
+	public Members(){
+		Scanner ob = new Scanner (System.in);
+		System.out.println("Enter the name: ");
+		this.name = ob.next();
+		System.out.println("Enter id no: ");
+		this.idno = ob.nextInt();
+		System.out.println("Etner the trip name");
+		this.tripname = ob.next();
+		System.out.println("Enter the age: ");
+		this.age = ob.nextInt();
+		
+		if (age>10)
+		{
+			System.out.println("Enter 1 for crew members or 2 for adult:");
+			this.membership = ob.nextInt();
+			if (membership ==1)
+			{
+				this.membershiptypes = "crew";
+				fee = 0;
+				countcrew++;
+		
+				
+			}
+			else if(membership == 2)
+			{
+				System.out.println("Enter ticket no: ");
+				ticketno = ob.nextInt();
+				this.membershiptypes = "adult";
+				fee = 500;
+				countadult++;
+				countticket++;
+			}
+			
+			
+		}
+		else {
+			System.out.println("Enter ticket no: ");
+			ticketno = ob.nextInt();
+			this.membershiptypes = "child";
+			fee = 250;
+			countchild++;
+			countticket++;
+		}
+	}
+		public static String Countmembers()
+		{
+			return "no of crewmembers = "+countcrew+"\nNumber of Adults= " +countadult+ "\nNumber of Childrens = "+countchild +"\nNo of ticket sold= "+countticket;
+		}
+	
+	
+	
+
+}
+
+
+
+package org.madhu;
+import java.util.*;
+public class Cruising {
+	public static void main(String[] args)
+	{
+		Members ob;
+		Scanner sc = new Scanner(System.in);
+		
+		Map<Integer, Members> map = new HashMap<Integer, Members>();
+		
+		System.out.println("Enter the number of people you want on the cruise ");
+		int num = sc.nextInt();
+		
+		for(int i=1;i<=num;i++)
+		{
+			map.put(i, new Members());
+		}
+		for (Map.Entry<Integer, Members> entry:map.entrySet())
+		{
+			int key = entry.getKey();
+			Members c = entry.getValue();
+			System.out.println(key+ " Data: ");
+			System.out.println("idno:"+c.idno + "\nName: "+c.name + "\nAge: "+c.age + "\ntripname:"+c.tripname + "\nMember Type: " +c.membershiptypes+ "\nFees: " +c.fee);
+		}
+		System.out.println(Members.Countmembers());
+	}
+
+}

@@ -1,0 +1,136 @@
+Question 1 A :
+
+package org.madhu;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class ProductLoader {
+	private static ArrayList<Product> products;
+	
+	public static void loadProduct() throws IOException {
+		products = new ArrayList<Product>();
+		File file = new File("Practical/question_1/productDetails.txt");
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		String line;
+		while ((line = br.readLine()) != null) {
+			String[] ProductDetails= line.split(",");
+			
+			products.add(new Product(ProductDetails[0], ProductDetails[1], Float.valueOf(ProductDetails[2]), Integer.valueOf(ProductDetails[3])));
+		}
+		fr.close();
+	}
+	
+	public static ArrayList<Product> getProductList() {
+		return products;
+		
+	}
+	
+	public static Product searchProduct(String productID) throws IOException {
+		ArrayList<Product> temp = getProductList();
+		for(Product i: temp) {
+			Product prod = i;
+			if (prod.productID.equals(productID)) {
+				String pID = prod.productID;
+				String pName = prod.productName;
+				float price = prod.price;
+				int quantity = prod.quantity;
+				return new Product(pID,pName,price,quantity);
+			}
+		}
+		return null;	
+	}
+}
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
+public class Product 
+{
+	String productID, productName;
+	float price;
+	int quantity;
+
+	public Product(String productID, String productName, float price, int quantity) {
+		this.productID = productID;
+		this.productName = productName;
+		this.price = price;
+		this.quantity = quantity;
+	}
+
+	public String getProductID() {
+		return productID;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+}
+
+________________________________________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________________________________________
+Question 1 B :
+
+package org.madhu;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TestProduct {
+	private static Scanner scan;
+
+	public static void main(String[] args) throws IOException {
+		scan = new Scanner(System.in);
+		ArrayList<Product> prod;
+		ProductLoader.loadProduct();
+		String newtemp = "\n";
+		prod = ProductLoader.getProductList();
+		System.out.print("Enter the product ID : ");
+		String prodID = scan.next();
+		Product checkProduct = ProductLoader.searchProduct(prodID);
+		if (checkProduct == null) {
+			System.out.print("Enter Product Name : ");
+			String pnm = scan.next();
+			System.out.print("Enter Price : ");
+			String pr = scan.next();
+			System.out.print("Enter Quantity : ");
+			String qt = scan.next();
+			newtemp += prodID+","+pnm+","+pr+","+qt;
+			TestProduct.addProductData(newtemp);
+			ProductLoader.loadProduct();
+			System.out.println("\nProduct Added : ");
+			checkProduct = ProductLoader.searchProduct(prodID);
+			TestProduct.getOutput(checkProduct);
+		} else {
+			TestProduct.getOutput(checkProduct);
+		}
+	}
+
+	public static void addProductData(String inputData) throws IOException {
+		FileWriter fw = new FileWriter("Practical/question_1/productDetails.txt", true);
+		fw.write(inputData);
+		fw.close();
+	}
+	
+	public static void getOutput(Product checkProduct) {
+		System.out.println("\nProduct ID : " + checkProduct.getProductID());
+		System.out.println("Product Name : " + checkProduct.getProductName());
+		System.out.println("Price : " + checkProduct.getPrice());
+		System.out.println("Quantity : " + checkProduct.getQuantity());
+	}
+
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------
+P101,SIM-CARD,100,500
+P102,DATA-CABLE,200,300

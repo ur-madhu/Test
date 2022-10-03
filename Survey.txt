@@ -1,0 +1,107 @@
+
+package org.madhu;
+import java.util.*;
+public class SurveyType {
+    String name;
+    static int colgate;
+    static int pepsodent;
+    static int patanjali;
+    static int dabarred;
+    static String result="same values";
+    int choice,m;
+    static int countchild,countmen,countwomen;
+    int memberType;
+    String type;
+    Scanner scan = new Scanner(System.in);
+    
+    public SurveyType() {
+        System.out.println("Enter Your Name : ");
+        this.name=scan.next();
+        System.out.println("Type 1 for children or 2 for men or 3 for women");
+        this.memberType=scan.nextInt();
+        if(memberType==1) {
+            this.type="children";
+            countchild++;
+            System.out.println("Enter which 1 for colgate 2 for pepsodent 3 for patanjali 4 for dabarred");
+            choice=scan.nextInt();
+            Which(choice);
+        }
+        if(memberType==3) {
+            this.type="women";
+            countwomen++;
+            System.out.println("Enter which 1 for colgate 2 for pepsodent 3 for patanjali 4 for dabarred");
+            choice=scan.nextInt();
+            Which(choice);
+        }
+        if(memberType==2) {
+            this.type="men";
+            countmen++;
+            System.out.println("Enter which 1 for colgate 2 for pepsodent 3 for patanjali 4 for dabarred");
+            choice=scan.nextInt();
+            Which(choice);
+        }}
+    public void Which(int ch) {
+        switch(ch) {
+        case 1: colgate++;
+        break;
+        case 2: pepsodent++;
+        break;
+        case 3: patanjali++;
+        break;
+        case 4: dabarred++;
+        break;
+        
+        }
+        
+        
+    }
+    
+        public static String Max() {
+            if(colgate>pepsodent && colgate>patanjali && colgate>dabarred) {
+                result="max is colgate";
+            }
+            if(pepsodent>colgate && pepsodent>patanjali && pepsodent>dabarred) {
+                result="max is pepsodent";
+            }
+            if(patanjali>colgate&& patanjali>pepsodent && patanjali>dabarred) {
+                result="max is patanjali";
+            }
+            if(dabarred>colgate && dabarred>patanjali && dabarred>pepsodent) {
+                result="max is dabar red";
+            }
+            
+            return "Number of children: "+countchild+"\nNumber of women: "+countwomen+"\nNumber of men: "+countmen+"\ncolgate: "+colgate+"\npepsodent: "+pepsodent+"\npatanjali: "+patanjali+"\ndabar red: "+dabarred+"\nmaximum is :"+result;
+
+
+
+
+     }  
+    
+}
+
+
+public class Survey{
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    Map<Integer,SurveyType> mapValue= new HashMap<Integer,SurveyType>();
+    System.out.println("Enter the no. of people");
+    
+int num = sc.nextInt();
+    
+    for(int i=1; i<=num; i++)
+    {
+        mapValue.put(i, new SurveyType());
+    }
+    for(Map.Entry<Integer, SurveyType> entry:mapValue.entrySet()){    
+        int key=entry.getKey();  
+        SurveyType b=entry.getValue();  
+        System.out.println(key+" Data:");
+        System.out.println("Name: " + b.name  +  "\nMember type: " + b.memberType+"\nType: "+b.type);    
+    }
+
+
+   System.out.println(SurveyType.Max());
+
+
+}
+}
